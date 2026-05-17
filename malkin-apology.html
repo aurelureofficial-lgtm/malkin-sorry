@@ -1,0 +1,1647 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>For Malkin ❤️</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&family=Dancing+Script:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --white: #ffffff;
+        --pink-light: #ffd6e7;
+        --pink-mid: #ffb3d1;
+        --pink-deep: #ff85b3;
+        --pink-accent: #e91e8c;
+        --blush: #fff0f6;
+        --text-dark: #2d1a26;
+        --text-mid: #7a4060;
+        --text-soft: #b07090;
+        --glass: rgba(255, 255, 255, 0.75);
+        --shadow: 0 8px 40px rgba(233, 30, 140, 0.1);
+        --shadow-card: 0 4px 24px rgba(200, 60, 120, 0.1);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Lato", sans-serif;
+        background: var(--white);
+        color: var(--text-dark);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* ---- FLOATING HEARTS BG ---- */
+      #hearts-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .heart-float {
+        position: absolute;
+        bottom: -60px;
+        font-size: 1.2rem;
+        opacity: 0.13;
+        animation: floatUp linear infinite;
+        filter: blur(0.5px);
+        pointer-events: none;
+        user-select: none;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) translateX(0) scale(1);
+          opacity: 0.13;
+        }
+        50% {
+          transform: translateY(-45vh) translateX(18px) scale(1.08);
+          opacity: 0.18;
+        }
+        100% {
+          transform: translateY(-105vh) translateX(-12px) scale(0.9);
+          opacity: 0;
+        }
+      }
+
+      /* ---- LOCK SCREEN ---- */
+      #lock-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: linear-gradient(160deg, #fff0f6 0%, #ffd6e7 50%, #fff 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 32px;
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+      }
+      #lock-screen.hide {
+        opacity: 0;
+        transform: scale(1.05);
+        pointer-events: none;
+      }
+      .lock-emoji {
+        font-size: 4rem;
+        margin-bottom: 18px;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.12);
+        }
+      }
+      .lock-title {
+        font-family: "Dancing Script", cursive;
+        font-size: 2.6rem;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+        line-height: 1.2;
+      }
+      .lock-sub {
+        font-family: "Lato", sans-serif;
+        font-size: 1rem;
+        color: var(--text-soft);
+        font-weight: 300;
+        margin-bottom: 40px;
+        font-style: italic;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #ff85b3, #e91e8c);
+        color: #fff;
+        border: none;
+        border-radius: 60px;
+        padding: 16px 42px;
+        font-size: 1.05rem;
+        font-family: "Lato", sans-serif;
+        font-weight: 400;
+        cursor: pointer;
+        letter-spacing: 0.04em;
+        box-shadow: 0 6px 28px rgba(233, 30, 140, 0.28);
+        transition:
+          transform 0.18s,
+          box-shadow 0.18s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 36px rgba(233, 30, 140, 0.38);
+      }
+      .btn-primary:active {
+        transform: scale(0.97);
+      }
+
+      /* ---- LOADER ---- */
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 900;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 32px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s;
+      }
+      #loader.show {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #loader.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .loader-text {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.5rem;
+        color: var(--text-soft);
+        max-width: 320px;
+        line-height: 1.6;
+      }
+      .loader-bar {
+        width: 200px;
+        height: 3px;
+        background: var(--pink-light);
+        border-radius: 4px;
+        margin-top: 28px;
+        overflow: hidden;
+      }
+      .loader-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #ff85b3, #e91e8c);
+        border-radius: 4px;
+        animation: loadFill 2.2s ease forwards;
+      }
+      @keyframes loadFill {
+        to {
+          width: 100%;
+        }
+      }
+
+      /* ---- MAIN CONTENT ---- */
+      #main {
+        position: relative;
+        z-index: 1;
+        display: none;
+      }
+      #main.show {
+        display: block;
+      }
+
+      /* ---- MUSIC TOGGLE ---- */
+      #music-btn {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        z-index: 500;
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        border: 1.5px solid var(--pink-light);
+        border-radius: 50px;
+        padding: 10px 18px;
+        font-size: 0.85rem;
+        color: var(--text-mid);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        box-shadow: 0 4px 18px rgba(233, 30, 140, 0.12);
+        transition: all 0.2s;
+      }
+      #music-btn:hover {
+        background: #fff;
+        box-shadow: 0 6px 24px rgba(233, 30, 140, 0.2);
+      }
+      #music-btn.playing {
+        color: var(--pink-accent);
+        border-color: var(--pink-accent);
+      }
+
+      /* ---- SECTIONS ---- */
+      section {
+        position: relative;
+      }
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 0 22px;
+      }
+
+      /* ---- HERO ---- */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 22px 60px;
+        background: linear-gradient(180deg, #fff0f6 0%, #fff 100%);
+      }
+      .hero-inner {
+        max-width: 420px;
+      }
+      .hero-badge {
+        display: inline-block;
+        background: var(--pink-light);
+        border-radius: 60px;
+        padding: 6px 18px;
+        font-size: 0.78rem;
+        color: var(--pink-accent);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 28px;
+        font-weight: 400;
+      }
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2.4rem;
+        line-height: 1.25;
+        color: var(--text-dark);
+        margin-bottom: 18px;
+        font-weight: 400;
+      }
+      .hero-title em {
+        color: var(--pink-accent);
+        font-style: italic;
+      }
+      .hero-sub {
+        font-size: 1rem;
+        color: var(--text-soft);
+        line-height: 1.7;
+        margin-bottom: 36px;
+        font-weight: 300;
+      }
+
+      /* ---- SECTION TITLE ---- */
+      .sec-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.9rem;
+        color: var(--text-dark);
+        text-align: center;
+        margin-bottom: 8px;
+        font-weight: 400;
+      }
+      .sec-sub {
+        text-align: center;
+        color: var(--text-soft);
+        font-size: 0.92rem;
+        margin-bottom: 36px;
+        font-weight: 300;
+        font-style: italic;
+      }
+
+      /* ---- APOLOGY LETTER ---- */
+      #apology {
+        padding: 80px 0;
+        background: var(--white);
+      }
+      .letter-card {
+        background: var(--glass);
+        border: 1.5px solid var(--pink-light);
+        border-radius: 24px;
+        padding: 36px 30px;
+        box-shadow: var(--shadow-card);
+        backdrop-filter: blur(8px);
+        position: relative;
+        overflow: hidden;
+      }
+      .letter-card::before {
+        content: "❤";
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        font-size: 8rem;
+        opacity: 0.05;
+        font-style: normal;
+      }
+      #name-cycle{
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  color: #fbb9b9;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 2px;
+  
+  transition: all 0.4s ease;
+  animation: glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from{
+    transform: scale(1);
+    opacity: .85;
+  }
+  to{
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+      .letter-date {
+        font-size: 0.78rem;
+        color: var(--text-soft);
+        letter-spacing: 0.1em;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+      }
+      .letter-salutation {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.7rem;
+        color: var(--pink-accent);
+        margin-bottom: 18px;
+      }
+      .letter-body {
+        font-size: 0.97rem;
+        color: var(--text-mid);
+        line-height: 1.9;
+        font-weight: 300;
+      }
+      .letter-body p {
+        margin-bottom: 14px;
+      }
+      .letter-sign {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.4rem;
+        color: var(--text-dark);
+        margin-top: 24px;
+      }
+
+      /* ---- VOICE NOTE ---- */
+      #voice-section {
+        padding: 80px 0;
+        background: var(--blush);
+      }
+      .voice-card {
+        background: var(--white);
+        border-radius: 24px;
+        padding: 32px 26px;
+        box-shadow: var(--shadow-card);
+        text-align: center;
+      }
+      .voice-icon {
+        font-size: 3rem;
+        margin-bottom: 14px;
+      }
+      .voice-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        color: var(--text-dark);
+        margin-bottom: 6px;
+      }
+      .voice-sub {
+        font-size: 0.88rem;
+        color: var(--text-soft);
+        font-style: italic;
+        margin-bottom: 22px;
+      }
+      .audio-placeholder {
+        background: var(--blush);
+        border-radius: 60px;
+        padding: 14px 22px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border: 1.5px dashed var(--pink-mid);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .audio-placeholder:hover {
+        background: var(--pink-light);
+      }
+      .audio-label {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        flex: 1;
+        text-align: left;
+      }
+      .audio-note {
+        font-size: 0.75rem;
+        color: var(--text-soft);
+        margin-top: 14px;
+        font-style: italic;
+      }
+
+      /* ---- TIMELINE ---- */
+      #timeline {
+        padding: 80px 0;
+        background: var(--white);
+      }
+      .tl-wrap {
+        position: relative;
+        padding-left: 28px;
+      }
+      .tl-wrap::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+          180deg,
+          var(--pink-light),
+          var(--pink-mid),
+          var(--pink-light)
+        );
+      }
+      .tl-item {
+        position: relative;
+        margin-bottom: 36px;
+        animation: fadeSlideIn 0.6s ease both;
+      }
+      .tl-item:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .tl-item:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .tl-item:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .tl-item:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .tl-item:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      .tl-item:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+      @keyframes fadeSlideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .tl-dot {
+        position: absolute;
+        left: -24px;
+        top: 6px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff85b3, #e91e8c);
+        box-shadow:
+          0 0 0 4px #fff,
+          0 0 12px rgba(233, 30, 140, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.5rem;
+      }
+      .tl-date {
+        font-size: 0.75rem;
+        color: var(--pink-accent);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .tl-event {
+        font-size: 1rem;
+        color: var(--text-dark);
+        line-height: 1.4;
+      }
+      .tl-emoji {
+        margin-left: 4px;
+      }
+
+      /* ---- LOVE CARDS ---- */
+      #love-cards {
+        padding: 80px 0;
+        background: var(--blush);
+      }
+      .cards-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .love-card {
+        background: var(--white);
+        border-radius: 20px;
+        padding: 22px 16px;
+        text-align: center;
+        box-shadow: var(--shadow-card);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .love-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 36px rgba(233, 30, 140, 0.15);
+      }
+      .love-card .emoji {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+      .love-card .label {
+        font-family: "Playfair Display", serif;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        font-weight: 400;
+      }
+      .love-card .desc {
+        font-size: 0.78rem;
+        color: var(--text-soft);
+        margin-top: 4px;
+        font-weight: 300;
+      }
+
+      /* ---- LITTLE THINGS ---- */
+      #little-things {
+        padding: 80px 0;
+        background: var(--white);
+      }
+      .things-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .thing-item {
+        background: var(--blush);
+        border-radius: 18px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border-left: 3px solid var(--pink-mid);
+      }
+      .thing-emoji {
+        font-size: 1.8rem;
+        flex-shrink: 0;
+      }
+      .thing-info {
+      }
+      .thing-key {
+        font-size: 0.75rem;
+        color: var(--text-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .thing-val {
+        font-size: 1rem;
+        color: var(--text-dark);
+        font-weight: 400;
+        margin-top: 2px;
+      }
+
+      /* ---- PROMISES ---- */
+      #promises {
+        padding: 80px 0;
+        background: var(--blush);
+      }
+      .promise-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .promise-item {
+        background: var(--white);
+        border-radius: 18px;
+        padding: 18px 22px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: var(--shadow-card);
+        transition: transform 0.2s;
+      }
+      .promise-item:hover {
+        transform: translateX(4px);
+      }
+      .promise-check {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff85b3, #e91e8c);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+      .promise-text {
+        font-size: 1rem;
+        color: var(--text-dark);
+      }
+
+      /* ---- COUNTER ---- */
+      #counter-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, #fff0f6, #ffd6e7);
+        text-align: center;
+      }
+      .counter-title {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.6rem;
+        color: var(--text-dark);
+        margin-bottom: 32px;
+      }
+      .counter-boxes {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+      .counter-box {
+        background: var(--white);
+        border-radius: 20px;
+        padding: 22px 20px;
+        min-width: 90px;
+        box-shadow: var(--shadow-card);
+      }
+      .counter-num {
+        font-family: "Playfair Display", serif;
+        font-size: 2.4rem;
+        color: var(--pink-accent);
+        display: block;
+        line-height: 1;
+      }
+      .counter-label {
+        font-size: 0.72rem;
+        color: var(--text-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 6px;
+      }
+      .counter-sub {
+        font-size: 0.95rem;
+        color: var(--text-soft);
+        font-style: italic;
+      }
+
+      /* ---- HEART GAME ---- */
+      #heart-game {
+        padding: 80px 0;
+        background: var(--white);
+        text-align: center;
+      }
+      .game-card {
+        background: var(--blush);
+        border-radius: 28px;
+        padding: 40px 24px;
+        position: relative;
+        overflow: hidden;
+      }
+      .game-heart {
+        font-size: 5rem;
+        cursor: pointer;
+        display: inline-block;
+        transition: transform 0.15s;
+        animation: heartbeat 2.2s ease-in-out infinite;
+        user-select: none;
+      }
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        14% {
+          transform: scale(1.18);
+        }
+        28% {
+          transform: scale(1);
+        }
+        42% {
+          transform: scale(1.1);
+        }
+        70% {
+          transform: scale(1);
+        }
+      }
+      .game-heart:active {
+        transform: scale(0.88);
+      }
+      .game-prompt {
+        font-family: "Playfair Display", serif;
+        font-size: 1.15rem;
+        color: var(--text-dark);
+        margin: 20px 0 10px;
+        line-height: 1.5;
+      }
+      .game-hint {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        font-style: italic;
+      }
+      .tap-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+      .tap-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid var(--pink-mid);
+        transition: all 0.2s;
+      }
+      .tap-dot.filled {
+        background: var(--pink-accent);
+        border-color: var(--pink-accent);
+        transform: scale(1.2);
+      }
+
+      /* ---- POPUP ---- */
+      .popup-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 800;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        padding: 24px;
+      }
+      .popup-overlay.show {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .popup-box {
+        background: var(--white);
+        border-radius: 28px;
+        padding: 40px 30px;
+        text-align: center;
+        max-width: 340px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(233, 30, 140, 0.2);
+        transform: scale(0.9);
+        transition: transform 0.3s;
+      }
+      .popup-overlay.show .popup-box {
+        transform: scale(1);
+      }
+      .popup-emoji {
+        font-size: 3rem;
+        margin-bottom: 14px;
+      }
+      .popup-text {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.5rem;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+      }
+      .popup-sub {
+        font-size: 0.9rem;
+        color: var(--text-soft);
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      .popup-close {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      /* ---- FINAL CTA ---- */
+      #final-cta {
+        padding: 100px 0 80px;
+        background: linear-gradient(180deg, #fff0f6 0%, #ffd6e7 100%);
+        text-align: center;
+      }
+      .final-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2.1rem;
+        color: var(--text-dark);
+        line-height: 1.3;
+        margin-bottom: 20px;
+      }
+      .final-sub {
+        font-size: 0.97rem;
+        color: var(--text-soft);
+        line-height: 1.8;
+        margin-bottom: 40px;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .final-love {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.5rem;
+        color: var(--pink-accent);
+        margin-top: 30px;
+        opacity: 0;
+        transition: opacity 0.8s 0.3s;
+      }
+      .final-love.show {
+        opacity: 1;
+      }
+
+      /* ---- ENDING ANIMATION ---- */
+      #ending {
+        padding: 80px 0 100px;
+        background: var(--white);
+        text-align: center;
+      }
+      .name-cycle {
+        font-family: "Dancing Script", cursive;
+        font-size: 2.8rem;
+        color: var(--pink-accent);
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ending-final {
+        font-family: "Lato", sans-serif;
+        font-weight: 300;
+        font-size: 0.95rem;
+        color: var(--text-soft);
+        margin-top: 28px;
+        font-style: italic;
+        opacity: 0;
+        transition: opacity 1s;
+      }
+      .ending-final.show {
+        opacity: 1;
+      }
+
+      /* ---- CONFETTI ---- */
+      .confetti-piece {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        animation: confettiFall 2s ease forwards;
+      }
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(-40px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      /* ---- FADE IN UTIL ---- */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ---- SCROLLBAR ---- */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--pink-light);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating Hearts Background -->
+    <div id="hearts-bg"></div>
+
+    <!-- Lock Screen -->
+    <div id="lock-screen">
+      <div class="lock-emoji">🔒</div>
+      <div class="lock-title">Only for Malkin ❤️</div>
+      <div class="lock-sub">Made with love, opened with hope.</div>
+      <button class="btn-primary" onclick="enterSite()">Tap to enter 🫂</button>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader">
+      <div class="loader-text">
+        Loading my apology for the most important person in my life...
+      </div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup-overlay" id="popup">
+      <div class="popup-box">
+        <div class="popup-emoji" id="popup-emoji">🥺</div>
+        <div class="popup-text" id="popup-text">sorryyy</div>
+        <div class="popup-sub" id="popup-sub">please maaf kr de na…</div>
+        <div class="popup-close" onclick="closePopup()">
+          okay, I understand ❤️
+        </div>
+      </div>
+    </div>
+
+    <!-- Music Button -->
+    <button id="music-btn" onclick="toggleMusic()">♪ For you</button>
+    <audio id="bg-music" loop>
+      <source
+        src=".\ytmp3free (mp3cut.net).mp3"
+        type="audio/mp3"
+      />
+    </audio>
+
+    <!-- MAIN CONTENT -->
+    <div id="main">
+      <!-- 3. HERO -->
+      <section id="hero">
+        <div class="hero-inner fade-in">
+          <div class="hero-badge">✦ a message from the heart</div>
+          <h1 class="hero-title">
+            Hey Malkin…<br /><em> Kal ke liye soryy 🥺❤️</em>
+          </h1>
+          <p class="hero-sub">
+            A simple sorry wasn't enough,<br />so I built this for you.
+          </p>
+          <button
+            class="btn-primary"
+            onclick="
+              document
+                .getElementById('apology')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Open my heart ❤️
+          </button>
+        </div>
+      </section>
+
+      <!-- 5. APOLOGY LETTER -->
+      <section id="apology">
+        <div class="container">
+          <h2 class="sec-title fade-in">My Apology Letter 💌</h2>
+          <p class="sec-sub fade-in">Read every word, please.</p>
+          <div class="letter-card fade-in">
+            <div class="letter-date">Written with all my heart BAcha</div>
+            <div class="letter-salutation">Dear Malkin,</div>
+            <div class="letter-body">
+              <p>
+                I know I mess up Everything, And its not one time I'm really
+                sorry yrr 🥺🥺🫂
+              </p>
+              <p>
+                I overthink every little thing, and sometimes that overthinking
+                becomes words that hurt you and i only say ki kabhi hurt nhi
+                karuga kabhi rula huga nhi in the end me hi rula ta hu and ye
+                mera biggest guilt hai yrr & That's the part that breaks me from
+                inside. 🥺🥺🥺🥺🧿🧿 You are the person I love most in this
+                world.
+              </p>
+              <p>
+                I'm truly sorry. Not just sorry for this time, but sorry for
+                every Everything I made you feel unseen, unheard, or unloved.
+                You deserved better. You still do. and i never want to that you
+                feel this ki you I dont love you that much i do in Beginning ,
+                malkin esa nhi hai i stil love you as i loved you in
+                starting🥺🎀🫂🫂🫂🫂
+              </p>
+              <p>
+                Kal meri tabit shi nhi thi sach me yrr isliye mera dimag bhi
+                kaam nhi kr rha tha soo just leave I respect you. Deeply. More
+                than I sometimes show. You are strong, and soft, and everything
+                in between. And I never want to be the reason you feel small.
+                and I reallyyyyyyyy LOveeeeeeeeeeeeee youuuuuuuuuuu soooooooooo
+                sooooooooo muchhhhhhhhhhhh 🎀🫂🫂🥺
+              </p>
+              <p>
+                I'm learning. Slowly, but genuinely. I'm learning how to love
+                you better. how can make you feel speical, How to show up That a
+                man is totlly in love with you pagal hu pura yrr tere liye
+              </p>
+              <p>
+                I never want to lose you, Malkin. Not even a little bit. Not
+                even for a moment. Because a world without you doesn't feel like
+                a world I want to be in., malkin yk I feels so blessed to have
+                you in my life 🥺 like I won yrr 🫂🫂🧿🧿🧿
+              </p>
+              <p>
+                So I'm here. On my knees, in my heart, in this little website I
+                built for you. Asking you to stay. saying ki kabhi esa nhi hog
+                ki you feel idc I really do care about you na hi kabhi me wapis
+                chila huga kabhi bhi nhi kal last tha ab kbhi terko meri tone
+                uper nhi sunayi degi I promie yrrr
+              </p>
+              <p>
+                IN the end i just want to say that i loveeeeeeeeeeee
+                youuuuuuuuuuuuuuuuuu so much that even extra "E,u "can't even
+                define it and i'm sorry for everything 🥺🥺
+              </p>
+            </div>
+            <div class="letter-sign">
+              With all my love, always 🥺❤️<br />Yours Stupid Gulam
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. VOICE NOTE -->
+      <section id="voice-section">
+        <div class="container">
+          <h2 class="sec-title fade-in">Hear me instead 🎙️</h2>
+          <p class="sec-sub fade-in">If reading feels hard…</p>
+
+          <div class="voice-card fade-in">
+            <div class="voice-icon">🎙️</div>
+            <div class="voice-title">My voice note for you</div>
+            <div class="voice-sub">
+              "Sometimes my voice says what my texts can't."
+            </div>
+
+            <audio controls style="width: 100%; margin-top: 20px">
+              <source src="./vn.mp4" type="audio/mpeg" />
+            </audio>
+
+            <p class="audio-note">
+              agree meri voice achi nhi hai per fir bhi 🥺❤️
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. TIMELINE -->
+      <section id="timeline">
+        <div class="container">
+          <h2 class="sec-title fade-in">Our Story 📅</h2>
+          <p class="sec-sub fade-in">Every moment I hold close.</p>
+          <div class="tl-wrap">
+            <div class="tl-item fade-in">
+              <div class="tl-dot"></div>
+              <div class="tl-date">15 Feb 2025</div>
+              <div class="tl-event">
+                First Instagram talk ✨<br /><small
+                  style="color: var(--text-soft); font-weight: 300"
+                  >Where it all quietly began…</small
+                >
+              </div>
+            </div>
+            <div class="tl-item fade-in">
+              <div class="tl-dot"></div>
+              <div class="tl-date">A beautiful day</div>
+              <div class="tl-event">
+                First handshake + bracelet 🥺🥹🥹🎀<br /><small
+                  style="color: var(--text-soft); font-weight: 300"
+                  >The moment I knew you were special.
+                </small>
+              </div>
+            </div>
+            <div class="tl-item fade-in">
+              <div class="tl-dot"></div>
+              <div class="tl-date">14 Jan 2026</div>
+              <div class="tl-event">
+                First hug 🫂<br /><small
+                  style="color: var(--text-soft); font-weight: 300"
+                  >I never wanted to let go. ik its forced but still its the
+                  warmest hug ever🥹😭🎀</small
+                >
+              </div>
+            </div>
+            <div class="tl-item fade-in">
+              <div class="tl-dot"></div>
+              <div class="tl-date">20 Jan 2026</div>
+              <div class="tl-event">
+                First cheek kiss 💋<br /><small
+                  style="color: var(--text-soft); font-weight: 300"
+                  >My heart skipped three beats fr😭🫂🥹
+                </small>
+              </div>
+            </div>
+            <div class="tl-item fade-in">
+              <div class="tl-dot"></div>
+              <div class="tl-date">7 Feb 2026</div>
+              <div class="tl-event">
+                White rose 🌹<br /><small
+                  style="color: var(--text-soft); font-weight: 300"
+                  >Pure love, just like you. and comfortable day iykyk</small
+                >
+              </div>
+            </div>
+            <div class="tl-item fade-in">
+              <div class="tl-dot"></div>
+              <div class="tl-date">22 Mar 2026</div>
+              <div class="tl-event">
+                3 months + first lip kiss ❤️<br /><small
+                  style="color: var(--text-soft); font-weight: 300"
+                  >The best 3 months of my life. and best moment ever
+                  🥹😭🫂</small
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. WHAT I LOVE -->
+      <section id="love-cards">
+        <div class="container">
+          <h2 class="sec-title fade-in">What I love about you 🌸</h2>
+          <p class="sec-sub fade-in">Every little thing.</p>
+          <div class="cards-grid">
+            <div class="love-card fade-in">
+              <div class="emoji">😊</div>
+              <div class="label">Your Smile</div>
+              <div class="desc">It fixes everything.</div>
+            </div>
+            <div class="love-card fade-in">
+              <div class="emoji">😤</div>
+              <div class="label">Cute Anger</div>
+              <div class="desc">Even mad, you're adorable.</div>
+            </div>
+            <div class="love-card fade-in">
+              <div class="emoji">🫂</div>
+              <div class="label">Your Comfort</div>
+              <div class="desc">Home feels like you.</div>
+            </div>
+            <div class="love-card fade-in">
+              <div class="emoji">🤝</div>
+              <div class="label">Your Trust</div>
+              <div class="desc">I don't take it lightly.</div>
+            </div>
+            <div class="love-card fade-in">
+              <div class="emoji">😈</div>
+              <div class="label">Badmoshi</div>
+              <div class="desc">Baddiee badmosh ho aap malkin 🎀🎀🫂</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. PROMISES -->
+      <section id="promises">
+        <div class="container">
+          <h2 class="sec-title fade-in">My Promises to You ✅</h2>
+          <p class="sec-sub fade-in">Not words. Commitments.</p>
+          <div class="promise-list">
+            <div class="promise-item fade-in">
+              <div class="promise-check">✓</div>
+              <div class="promise-text">
+                I'll never raise my voice at you again only whispers, and sweet
+                nothings.
+              </div>
+            </div>
+            <div class="promise-item fade-in">
+              <div class="promise-check">✓</div>
+              <div class="promise-text">
+                i'll never make you feel like you're not enough because you are
+                more than enough, always.
+              </div>
+            </div>
+            <div class="promise-item fade-in">
+              <div class="promise-check">✓</div>
+              <div class="promise-text">
+                I'll never make you feel ki you I dont love you that much
+                because I do, more than words can say.
+              </div>
+            </div>
+            <div class="promise-item fade-in">
+              <div class="promise-check">✓</div>
+              <div class="promise-text">
+                I'll try ki aapko wapis esa feel na ho ki you dont deserve me
+                because I deserve you, and I'm the lucky one here.
+              </div>
+            </div>
+            <div class="promise-item fade-in">
+              <div class="promise-check">✓</div>
+              <div class="promise-text">
+                I'll listen better with full attention, not half a mind.
+              </div>
+            </div>
+            <div class="promise-item fade-in">
+              <div class="promise-check">✓</div>
+              <div class="promise-text">
+                I'll overthink less and trust us more.
+              </div>
+            </div>
+            <div class="promise-item fade-in">
+              <div class="promise-check">✓</div>
+              <div class="promise-text">
+                I'll respect your space always, without making you feel guilty.
+              </div>
+            </div>
+            <div class="promise-item fade-in">
+              <div class="promise-check">✓</div>
+              <div class="promise-text">
+                I'll keep choosing you every single morning I wake up.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11. COUNTER -->
+      <section id="counter-section">
+        <div class="container">
+          <div class="counter-title fade-in">
+            Loving you since 22/12/2025 ❤️
+          </div>
+          <div class="counter-boxes fade-in">
+            <div class="counter-box">
+              <span class="counter-num" id="cnt-days">0</span>
+              <div class="counter-label">Days</div>
+            </div>
+            <div class="counter-box">
+              <span class="counter-num" id="cnt-hours">0</span>
+              <div class="counter-label">Hours</div>
+            </div>
+            <div class="counter-box">
+              <span class="counter-num" id="cnt-mins">0</span>
+              <div class="counter-label">Minutes</div>
+            </div>
+          </div>
+          <div class="counter-sub fade-in">
+            and I still choose you, every day. 🥺
+          </div>
+        </div>
+      </section>
+
+      <!-- 12. HEART GAME -->
+      <section id="heart-game">
+        <div class="container">
+          <h2 class="sec-title fade-in">The Forgiveness Game ❤️</h2>
+          <p class="sec-sub fade-in">A little game, with real feelings.</p>
+          <div class="game-card fade-in">
+            <div class="game-heart" id="game-heart" onclick="handleGameTap()">
+              ❤️
+            </div>
+            <div class="game-prompt" id="game-prompt">
+              If you've forgiven me, tap the heart 2 times ❤️<br />If not… tap
+              once 🥺
+            </div>
+            <div class="game-hint" id="game-hint">Each tap counts...</div>
+            <div class="tap-dots" id="tap-dots"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 13. FINAL CTA -->
+      <section id="final-cta">
+        <div class="container">
+          <h2 class="final-title fade-in">
+            Stay with me…<br />like always, like forever 🫂❤️
+          </h2>
+          <p class="final-sub fade-in">
+            Not asking for a restart, because I never want us to end.<br />Just
+            asking to keep loving you better, every single day.
+          </p>
+          <button
+            class="btn-primary fade-in"
+            id="always-btn"
+            onclick="alwaysYours()"
+          >
+            Always yours ❤️
+          </button>
+          <div class="final-love" id="final-love">
+            I love you, Malkin. Yesterday, today, always. ❤️
+          </div>
+        </div>
+      </section>
+
+      <!-- 14. ENDING -->
+     <section id="ending">
+  <div class="container">
+    <div id="name-cycle">Malkin ❤️</div>
+    <div id="ending-final">
+      Different names. Same favorite person. ❤️
+    </div>
+  </div>
+</section>
+    <!-- /main -->
+
+    <script>
+      // ---- HEARTS BACKGROUND ----
+      (function () {
+        const bg = document.getElementById("hearts-bg");
+        const count = 22;
+        for (let i = 0; i < count; i++) {
+          const h = document.createElement("div");
+          h.className = "heart-float";
+          h.textContent = "❤️";
+          h.style.left = Math.random() * 100 + "%";
+          h.style.animationDuration = 8 + Math.random() * 14 + "s";
+          h.style.animationDelay = Math.random() * 14 + "s";
+          h.style.fontSize = 0.8 + Math.random() * 1.4 + "rem";
+          h.style.opacity = 0.08 + Math.random() * 0.12;
+          bg.appendChild(h);
+        }
+      })();
+
+      // ---- LOCK + LOADER ----
+      function enterSite() {
+        const lock = document.getElementById("lock-screen");
+        const loader = document.getElementById("loader");
+        lock.classList.add("hide");
+        setTimeout(() => {
+          loader.classList.add("show");
+          setTimeout(() => {
+            loader.classList.add("hide");
+            document.getElementById("main").classList.add("show");
+            document.getElementById("music-btn").style.display = "flex";
+            startCounter();
+            startNameCycle();
+            observeFadeIns();
+            // animate first hero item
+            document
+              .querySelectorAll("#hero .fade-in")
+              .forEach((el) => el.classList.add("visible"));
+          }, 2600);
+        }, 700);
+      }
+
+      // ---- MUSIC ----
+      let playing = false;
+      function toggleMusic() {
+        const audio = document.getElementById("bg-music");
+        const btn = document.getElementById("music-btn");
+        if (!playing) {
+          audio.play();
+          btn.textContent = "♫ Playing";
+          btn.classList.add("playing");
+          playing = true;
+        } else {
+          audio.pause();
+          btn.textContent = "♪ For you";
+          btn.classList.remove("playing");
+          playing = false;
+        }
+      }
+
+      // ---- FADE IN OBSERVER ----
+      function observeFadeIns() {
+        const els = document.querySelectorAll(".fade-in");
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) e.target.classList.add("visible");
+            });
+          },
+          { threshold: 0.15 },
+        );
+        els.forEach((el) => obs.observe(el));
+      }
+
+      // ---- COUNTER ----
+      function startCounter() {
+        const start = new Date("2025-12-22T00:00:00");
+        function update() {
+          const now = new Date();
+          const diff = now - start;
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+          );
+          const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          document.getElementById("cnt-days").textContent = days;
+          document.getElementById("cnt-hours").textContent = hours;
+          document.getElementById("cnt-mins").textContent = mins;
+        }
+        update();
+        setInterval(update, 30000);
+      }
+
+      // ---- NAME CYCLE ----
+      function startNameCycle() {
+        const names = ["Malkin", "Rasmalayi", "Kaju Katli", "Mera Pyara Bacha"];
+        const el = document.getElementById("name-cycle");
+        const final = document.getElementById("ending-final");
+        let i = 0,
+          cycles = 0;
+        function cycle() {
+          el.style.opacity = 0;
+          setTimeout(() => {
+            i = (i + 1) % names.length;
+            el.textContent = names[i];
+            el.style.opacity = 1;
+            cycles++;
+            if (cycles >= names.length * 2) {
+              setTimeout(() => {
+                final.classList.add("show");
+              }, 600);
+            } else {
+              setTimeout(cycle, 2000);
+            }
+          }, 600);
+        }
+        el.style.transition = "opacity 0.6s";
+        setTimeout(cycle, 2000);
+      }
+
+      // ---- HEART GAME ----
+      let gameStage = 0;
+      let tapCount = 0;
+      const stages = [
+        {
+          needed: 2,
+          prompt:
+            "If you've forgiven me, tap the heart 2 times ❤️\nIf not… tap once 🥺",
+          hint: "Tap the heart...",
+        },
+        {
+          needed: 3,
+          prompt:
+            "Now… if maaf kiya, tap 3 times ❤️\nIf not, tap once again 🥺",
+          hint: "Almost there...",
+        },
+        {
+          needed: 4,
+          prompt: "Ab to maaf kr diya? tap 4 times ❤️\nNahi to 1 more time 🥺",
+          hint: "Soo close 🥺",
+        },
+        {
+          needed: 5,
+          prompt: "Now if forgiven, tap 5 times ❤️\nOr once more if not 🥺",
+          hint: "Final chance 😭",
+        },
+      ];
+      const popupMessages = [
+        {
+          emoji: "🥺",
+          text: "sorryyy 🥺",
+          sub: "please maaf kr de na…\nI really mean it ❤️",
+        },
+        {
+          emoji: "😭",
+          text: "thoda aur mana leta hu 🥺",
+          sub: "pleasee, I can't see my Malkin upset ❤️",
+        },
+        {
+          emoji: "💔",
+          text: "Okay seriously 😭",
+          sub: "Your stupid boy is trying his best 🫂\nplease maaf kr de...",
+        },
+      ];
+
+      function updateDots() {
+        const container = document.getElementById("tap-dots");
+        const needed = stages[gameStage]?.needed || 5;
+        container.innerHTML = "";
+        for (let i = 0; i < needed; i++) {
+          const d = document.createElement("div");
+          d.className = "tap-dot" + (i < tapCount ? " filled" : "");
+          container.appendChild(d);
+        }
+      }
+
+      function handleGameTap() {
+        if (gameStage >= stages.length) return;
+        tapCount++;
+        const needed = stages[gameStage].needed;
+        updateDots();
+
+        // Animate heart
+        const h = document.getElementById("game-heart");
+        h.style.transform = "scale(0.8)";
+        setTimeout(() => (h.style.transform = ""), 150);
+
+        if (tapCount === 1 && gameStage < stages.length - 1) {
+          // single tap = not forgiven yet
+          const msg =
+            popupMessages[Math.min(gameStage, popupMessages.length - 1)];
+          showPopup(msg.emoji, msg.text, msg.sub);
+          gameStage++;
+          tapCount = 0;
+          setTimeout(() => {
+            if (gameStage < stages.length) {
+              document.getElementById("game-prompt").textContent =
+                stages[gameStage].prompt;
+              document.getElementById("game-hint").textContent =
+                stages[gameStage].hint;
+              updateDots();
+            }
+          }, 400);
+        } else if (tapCount >= needed) {
+          // Won!
+          tapCount = needed;
+          updateDots();
+          setTimeout(() => winGame(), 300);
+        }
+      }
+
+      function winGame() {
+        showPopup(
+          "🎉",
+          "mannn gyiiiiiiiiii yeyeyeyey ❤️",
+          "and I'm still falling for you…\nevery single day 🫂❤️",
+        );
+        launchConfetti(80);
+        launchHearts();
+      }
+
+      function showPopup(emoji, text, sub) {
+        document.getElementById("popup-emoji").textContent = emoji;
+        document.getElementById("popup-text").textContent = text;
+        document.getElementById("popup-sub").textContent = sub;
+        document.getElementById("popup").classList.add("show");
+      }
+      function closePopup() {
+        document.getElementById("popup").classList.remove("show");
+      }
+
+      // ---- CONFETTI ----
+      function launchConfetti(count) {
+        const colors = [
+          "#ff85b3",
+          "#e91e8c",
+          "#ffd6e7",
+          "#ffb3d1",
+          "#ff4d8a",
+          "#ffffff",
+        ];
+        for (let i = 0; i < count; i++) {
+          const c = document.createElement("div");
+          c.className = "confetti-piece";
+          c.style.left = Math.random() * 100 + "vw";
+          c.style.top = "-10px";
+          c.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+          c.style.animationDelay = Math.random() * 1.5 + "s";
+          c.style.animationDuration = 1.5 + Math.random() + "s";
+          c.style.width = c.style.height = 6 + Math.random() * 10 + "px";
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 3500);
+        }
+      }
+
+      function launchHearts() {
+        for (let i = 0; i < 20; i++) {
+          const h = document.createElement("div");
+          h.style.cssText = `position:fixed;font-size:${1 + Math.random() * 2}rem;left:${Math.random() * 100}vw;top:${40 + Math.random() * 40}vh;pointer-events:none;z-index:9999;animation:floatUp 2.5s ease forwards;animation-delay:${Math.random()}s`;
+          h.textContent = "❤️";
+          document.body.appendChild(h);
+          setTimeout(() => h.remove(), 4000);
+        }
+      }
+
+      // ---- ALWAYS YOURS ----
+      function alwaysYours() {
+        launchConfetti(60);
+        launchHearts();
+        document.getElementById("final-love").classList.add("show");
+      }
+
+      // Hide music btn initially
+      document.getElementById("music-btn").style.display = "none";
+      window.onload = function () {
+  const names = [
+    "Malkin ❤️",
+    "Rasmalayi 🥺",
+    "Kaju Katli 🍬",
+    "Mera Pyara Bacha 🫶",
+    "Chanchal ✨"
+  ];
+
+  let i = 0;
+  const name = document.getElementById("name-cycle");
+
+  setInterval(() => {
+    name.style.opacity = "0";
+
+    setTimeout(() => {
+      i = (i + 1) % names.length;   // repeat loop
+      name.innerHTML = names[i];
+      name.style.opacity = "1";
+    }, 400);
+
+  }, 2000);
+};
+
+    </script>
+  </body>
+</html>
